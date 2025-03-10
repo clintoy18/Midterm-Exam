@@ -49,7 +49,6 @@ function editTask(index){
 }
 
 //Function to delete a task 
-
 function deleteTask(index){
     if (confirm('Are you sure you want to delete this task?')){
         tasks.splice('index, 1');
