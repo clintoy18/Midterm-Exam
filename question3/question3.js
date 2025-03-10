@@ -1,59 +1,17 @@
-
-// array to store todo list
-let todos = [];
-
-
-const todoForm = document.getElementById('todo-form');
-const todoInput = document.getElementById('todo-input');
-const todoList = document.getElementById('todo-list');
+const express = require('express');
+const app = express();
+const port = 3000;
 
 
-//Function to render todos
+//serve static files from the "public" folder
+app.use(express.static('public'));
 
-function renderTodos() {
-    todoList.innerHTML = ''; // Clears the list
-    todos.forEach((todo, index) => {
-        const li = document.createElement('li');
-        li.className = 'todo-item';
-        li.innerHTML = `
-         <span>${todo}</span>
-         <button onclick = "editTodo(${index})">Edit</button>
-         <button onclick = "deleteTodo(${index})">Delete</button>
-        `;
-        todoList.appendChild(li);
-    });
-}
+//Define the route for the home page
+app.get('/test', (req,res) => {   
+    res.send("Express is working! Clint Alonzo");
+});
 
-function addTodo(event) {
-   event.preventDefault();//prevenet form submission
-   const newTodo = todoInput.value.trim();
-   if (newTodo) {
-    todos.push(newTodo);
-    todoInput.value = ''; //clear the input
-    renderTodos();
-   }
-
-}
-//Function to edit todo
-
-function editTodo(index){
-    const updateTodo = prompt('Edit your todo', todos[index]);
-    if(updateTodo !== null) {
-        todos[index] = updateTodo.trim();
-        renderTodos();
-    }
-}
-
-//Function to delete a todo 
-
-function deleteTodo(index){
-    if (confirm('Are you sure you want to delete this todo?')){
-        todos.splice('index, 1');
-        renderTodos();
-    }
-}
-//Event listener
-todoForm.addEventListener('submit',addTodo);
-
-//Initial render
-renderTodos();
+//Start the server 
+app.listen(port, ()=> {
+   console.log(`Server running at http://localhost:${port}`);
+})
